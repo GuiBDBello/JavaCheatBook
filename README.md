@@ -1,2 +1,11 @@
 # JavaCheatBook
-Repository created to upload samples of usage of libraries in Java
+Repository created to upload samples of usage of libraries in Java.
+
+## Image Magick
+Example of how to use Image Magick in Java.
+
+## Tesseract OCR
+Example of how to use Tesseract OCR in Java.
+
+## Util
+Example of how to create a Util Class in Java.
