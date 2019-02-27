@@ -1,5 +1,5 @@
 # JavaCheatBook
-Repository created to upload samples of usage of libraries in Java.
+Extended CheatSheet to demonstrate examples of usage of libraries in Java.
 
 ## Image Magick
 Example of how to use Image Magick in Java.
