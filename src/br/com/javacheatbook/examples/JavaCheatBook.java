@@ -15,6 +15,13 @@ public class JavaCheatBook {
     public static void main(String[] args) {
 
         // ##################################################
+        // #################### Tesseract ####################
+        // ##################################################
+        TesseractOCR tesseractOCR = new TesseractOCR();
+
+        tesseractOCR.executeTesseract(new File(""), new File(""), "por", "txt", 3, 3);
+
+        // ##################################################
         // #################### Util ####################
         // ##################################################
         /**
