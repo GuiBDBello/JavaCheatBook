@@ -14,4 +14,4 @@ Example of how to use Tesseract OCR in Java.
 https://github.com/UB-Mannheim/tesseract/wiki (UB-Mannheim)
 
 ## Util
-Example of how to create a Util Class in Java.
+Example of how to create a Utilitary Class in Java.
