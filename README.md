@@ -1,6 +1,12 @@
 # JavaCheatBook
 Extended CheatSheet created to demonstrate examples of usage of libraries in Java.
 
+## JNotify
+Example of how to use JNotify in Java.
+
+### Prerequisites
+https://sourceforge.net/projects/jnotify/files/
+
 ## Image Magick
 Example of how to use Image Magick in Java.
 
