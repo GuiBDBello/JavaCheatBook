@@ -1,83 +1,144 @@
-/**
- * To use this class, you have to install Tesseract (I recommend installing it via the installer made by UB-Mannheim at https://github.com/UB-Mannheim/tesseract/wiki)
- */
-package br.com.javacheatbook.tesseractocr;
+package br.com.ocr;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
+ * To use this class, you have to install Tesseract.
+ * 
+ * I recommend installing it via the installer
+ * made by UB-Mannheim which you can found at:
+ * 
+ * https://github.com/UB-Mannheim/tesseract/wiki
+ * 
+ * I recommend version 4.0.0 or newer.
+ * 
+ * By default, Tesseract comes with the english language
+ * pack. If you want to use another language, you should
+ * download it via command-line or 
+ * 
  * @author GuiDB
  */
 public class TesseractOCR {
+	
+	public static void main(String[] args) {
+		TesseractOCR t = new TesseractOCR(new File("C:\\Users\\guilh\\Downloads\\Print2.jpg"), new File("C:\\Users\\guilh\\Downloads\\Print2"));
+		t.tesseract();
+	}
+	
+	public TesseractOCR(File imageName, File outputBase) {
+		this.imageName = imageName;
+		this.outputBase = outputBase;
+	}
+	
+	public TesseractOCR(File imageName, File outputBase, String language) {
+		this.imageName = imageName;
+		this.outputBase = outputBase;
+		this.language = language;
+	}
+	
+	public TesseractOCR(File imageName, File outputBase, String language, PageSegmentationMode psm, OCREngineModes oem) {
+		this.imageName = imageName;
+		this.outputBase = outputBase;
+		this.language = language;
+		this.psm = psm;
+		this.oem = oem;
+	}
 
-    private File fileIn;
-    private File fileOut;
-    private String language;
-    private String extension;
-    private int pageSegmentationModes = 3;
-    private int ocrEngineModes = 3;
+	private File imageName;
+	private File outputBase;
+	private String language = "eng";
+	private PageSegmentationMode psm = PageSegmentationMode._03_FULLY_AUTOMATIC_PAGE_SEGMENTATION_BUT_NO_OSD;
+	private OCREngineModes oem = OCREngineModes._03_DEFAULT;
 
-    public File getFileIn() {
-        return this.fileIn;
-    }
+	/**
+	 * @return the imageName
+	 */
+	public File getImageName() {
+		return imageName;
+	}
 
-    public void setFileIn(File fileIn) {
-        this.fileIn = fileIn;
-    }
+	/**
+	 * @param imageName the imageName to set
+	 */
+	public void setImageName(File imageName) {
+		this.imageName = imageName;
+	}
 
-    public File getFileOut() {
-        return this.fileOut;
-    }
+	/**
+	 * @return the outputBase
+	 */
+	public File getOutputBase() {
+		return outputBase;
+	}
 
-    public void setFileOut(File fileOut) {
-        this.fileOut = fileOut;
-    }
+	/**
+	 * @param outputBase the outputBase to set
+	 */
+	public void setOutputBase(File outputBase) {
+		this.outputBase = outputBase;
+	}
 
-    public String getLanguage() {
-        return this.language;
-    }
+	/**
+	 * @return the language
+	 */
+	public String getLanguage() {
+		return language;
+	}
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+	/**
+	 * @param language the language to set
+	 */
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
-    public String getExtension() {
-        return this.extension;
-    }
+	/**
+	 * @return the psm
+	 */
+	public PageSegmentationMode getPageSegmentationMode() {
+		return psm;
+	}
 
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
+	/**
+	 * @param psm the psm to set
+	 */
+	public void setPageSegmentationMode(PageSegmentationMode psm) {
+		this.psm = psm;
+	}
 
-    public int getPageSegmentationModes() {
-        return this.pageSegmentationModes;
-    }
+	/**
+	 * @return the oem
+	 */
+	public OCREngineModes getOCREngineModes() {
+		return oem;
+	}
 
-    public void setPageSegmentationModes(int pageSegmentationModes) {
-        this.pageSegmentationModes = pageSegmentationModes;
-    }
+	/**
+	 * @param oem the oem to set
+	 */
+	public void setOCREngineModes(OCREngineModes oem) {
+		this.oem = oem;
+	}
 
-    public int getOcrEngineModes() {
-        return this.ocrEngineModes;
-    }
-
-    public void setOcrEngineModess(int ocrEngineModes) {
-        this.ocrEngineModes = ocrEngineModes;
-    }
-
-    public void executeTesseract(File fileIn, File fileOut, String language, String extension,
-            int pageSegmentationModes, int ocrEngineModes) {
-        try {
-            Runtime.getRuntime().exec("tesseract "
-                    + this.getFileIn().getAbsolutePath() + " "
-                    + this.getFileOut().getAbsolutePath() + " "
-                    + "-l " + this.getLanguage() + " "
-                    + this.getExtension());
-        } catch (IOException ex) {
-            Logger.getLogger(TesseractOCR.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	public void tesseract() {
+		StringBuilder command = new StringBuilder("tesseract");
+		command.append(" ");		command.append(this.getImageName());
+		command.append(" ");		command.append(this.getOutputBase());
+		command.append(" -l ");		command.append(this.getLanguage());
+//		command.append(" --psm ");	command.append(this.getPageSegmentationMode());
+//		command.append(" --oem ");	command.append(this.getOCREngineModes());
+		
+		ProcessBuilder pb = new ProcessBuilder();
+		pb.command("cmd", "/c", command.toString());
+		
+		System.out.println(pb.command());
+		
+		try {
+			pb.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
