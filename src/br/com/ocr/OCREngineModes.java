@@ -1,0 +1,8 @@
+package br.com.ocr;
+
+public enum OCREngineModes {
+	_00_LEGACY_ENGINE_MODE,
+	_01_NEURAL_NETS_LSTM_ENGINE_ONLY,
+	_02_LEGACY_PLUS_LSTM_ENGINES,
+	_03_DEFAULT
+}
