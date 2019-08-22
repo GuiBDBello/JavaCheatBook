@@ -3,6 +3,8 @@ package br.com.ocr;
 import java.io.File;
 import java.io.IOException;
 
+import br.com.utils.MyUtil;
+
 /**
  * To use this class, you have to install Tesseract.
  * 
@@ -22,7 +24,7 @@ import java.io.IOException;
 public class TesseractOCR {
 	
 	public static void main(String[] args) {
-		TesseractOCR t = new TesseractOCR(new File("C:\\Users\\guilh\\Downloads\\Print2.jpg"), new File("C:\\Users\\guilh\\Downloads\\Print2"));
+		TesseractOCR t = new TesseractOCR(new File("C:\\Users\\guilh\\Downloads\\Print2.png"), new File("C:\\Users\\guilh\\Downloads\\Print2"));
 		t.tesseract();
 	}
 	
@@ -121,22 +123,23 @@ public class TesseractOCR {
 		this.oem = oem;
 	}
 
+	/**
+	 * Execute the "tesseract" command, using the attributes defined in this object.
+	 */
 	public void tesseract() {
-		StringBuilder command = new StringBuilder("tesseract");
-		command.append(" ");		command.append(this.getImageName());
-		command.append(" ");		command.append(this.getOutputBase());
-		command.append(" -l ");		command.append(this.getLanguage());
-//		command.append(" --psm ");	command.append(this.getPageSegmentationMode());
-//		command.append(" --oem ");	command.append(this.getOCREngineModes());
-		
-		ProcessBuilder pb = new ProcessBuilder();
-		pb.command("cmd", "/c", command.toString());
-		
-		System.out.println(pb.command());
-		
 		try {
-			pb.start();
+			MyUtil.executeCommand(new ProcessBuilder("cmd", "/c",
+					"tesseract",
+					this.getImageName().getAbsolutePath(),
+					this.getOutputBase().getAbsolutePath(),
+					"-l", this.getLanguage(),
+					"--psm", this.getPageSegmentationMode().getValue(),
+					"--oem", this.getOCREngineModes().getValue()
+			), true);
+			
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
