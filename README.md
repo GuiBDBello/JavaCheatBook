@@ -1,5 +1,11 @@
 # JavaCheatBook
-Extended CheatSheet to demonstrate examples of usage of libraries in Java.
+Extended CheatSheet created to demonstrate examples of usage of libraries in Java.
+
+## JNotify
+Example of how to use JNotify in Java.
+
+### Prerequisites
+https://sourceforge.net/projects/jnotify/files/
 
 ## Image Magick
 Example of how to use Image Magick in Java.
@@ -14,4 +20,4 @@ Example of how to use Tesseract OCR in Java.
 https://github.com/UB-Mannheim/tesseract/wiki (UB-Mannheim)
 
 ## Util
-Example of how to create a Util Class in Java.
+Example of how to create a Utilitary Class in Java.
