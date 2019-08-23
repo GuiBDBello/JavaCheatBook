@@ -13,7 +13,7 @@ import br.com.utils.MyUtil;
  * 
  * https://github.com/UB-Mannheim/tesseract/wiki
  * 
- * I recommend version 4.0.0 or newer.
+ * I recommend Tesseract version 4.0.0 or newer.
  * 
  * By default, Tesseract comes with the english language
  * pack. If you want to use another language, you should
@@ -23,35 +23,119 @@ import br.com.utils.MyUtil;
  */
 public class TesseractOCR {
 	
-	public static void main(String[] args) {
-		TesseractOCR t = new TesseractOCR(new File("C:\\Users\\guilh\\Downloads\\Print2.png"), new File("C:\\Users\\guilh\\Downloads\\Print2"));
-		t.tesseract();
-	}
+	private File imageName;
+	private File outputBase;
+	private String extension = "";
+	private String language = "eng";
+	private PageSegmentationMode psm = PageSegmentationMode._03_FULLY_AUTOMATIC_PAGE_SEGMENTATION_BUT_NO_OSD;
+	private OCREngineModes oem = OCREngineModes._03_DEFAULT;
 	
+	/**
+	 * Minimal parameters to instantiate TesseractOCR.
+	 * 
+	 * By default, unset values will be:
+	 * - extension: "" (or txt)
+	 * - language: "eng"
+	 * - psm: "3"
+	 * - oem: "3"
+	 * 
+	 * @param imageName the image to be "ocrized"
+	 * @param outputBase the output 
+	 */
 	public TesseractOCR(File imageName, File outputBase) {
 		this.imageName = imageName;
 		this.outputBase = outputBase;
 	}
 	
-	public TesseractOCR(File imageName, File outputBase, String language) {
+	/**
+	 * By default, unset values will be:
+	 * - language: "eng"
+	 * - psm: "3"
+	 * - oem: "3"
+	 * 
+	 * @param imageName
+	 * @param outputBase
+	 * @param extension
+	 */
+	public TesseractOCR(File imageName, File outputBase, String extension) {
 		this.imageName = imageName;
 		this.outputBase = outputBase;
 		this.language = language;
 	}
 	
-	public TesseractOCR(File imageName, File outputBase, String language, PageSegmentationMode psm, OCREngineModes oem) {
+	/**
+	 * By default, unset values will be:
+	 * - psm: "3"
+	 * - oem: "3"
+	 * 
+	 * @param imageName
+	 * @param outputBase
+	 * @param extension
+	 * @param language
+	 */
+	public TesseractOCR(File imageName, File outputBase, String extension, String language) {
+		this.imageName = imageName;
+		this.outputBase = outputBase;
+		this.language = language;
+	}
+	
+	/**
+	 * * By default, unset values will be:
+	 * - oem: "3"
+	 * 
+	 * @param imageName
+	 * @param outputBase
+	 * @param extension
+	 * @param language
+	 * @param psm
+	 */
+	public TesseractOCR(File imageName, File outputBase, String extension, String language,
+			PageSegmentationMode psm) {
+		
+		this.imageName = imageName;
+		this.outputBase = outputBase;
+		this.language = language;
+		this.psm = psm;
+	}
+	
+	/**
+	 * * By default, unset values will be:
+	 * - psm: "3"
+	 * 
+	 * @param imageName
+	 * @param outputBase
+	 * @param extension
+	 * @param language
+	 * @param oem
+	 */
+	public TesseractOCR(File imageName, File outputBase, String extension, String language,
+			OCREngineModes oem) {
+		
+		this.imageName = imageName;
+		this.outputBase = outputBase;
+		this.language = language;
+		this.oem = oem;
+	}
+	
+	/**
+	 * All parameters to instantiate TesseractOCR.
+	 * 
+	 * @param imageName
+	 * @param outputBase
+	 * @param extension
+	 * @param language
+	 * @param psm
+	 * @param oem
+	 */
+	public TesseractOCR(File imageName, File outputBase, String extension, String language,
+			PageSegmentationMode psm, OCREngineModes oem) {
+		
 		this.imageName = imageName;
 		this.outputBase = outputBase;
 		this.language = language;
 		this.psm = psm;
 		this.oem = oem;
 	}
-
-	private File imageName;
-	private File outputBase;
-	private String language = "eng";
-	private PageSegmentationMode psm = PageSegmentationMode._03_FULLY_AUTOMATIC_PAGE_SEGMENTATION_BUT_NO_OSD;
-	private OCREngineModes oem = OCREngineModes._03_DEFAULT;
 
 	/**
 	 * @return the imageName
@@ -79,6 +163,20 @@ public class TesseractOCR {
 	 */
 	public void setOutputBase(File outputBase) {
 		this.outputBase = outputBase;
+	}
+	
+	/**
+	 * @return the extension
+	 */
+	public String getExtension() {
+		return extension;
+	}
+
+	/**
+	 * @param extension the extension to set
+	 */
+	public void setExtension(String extension) {
+		this.extension = extension;
 	}
 
 	/**
@@ -125,6 +223,8 @@ public class TesseractOCR {
 
 	/**
 	 * Execute the "tesseract" command, using the attributes defined in this object.
+	 * 
+	 * Example (Windows): cmd /c tesseract imagename.jpg imagename -l eng --psm 3 --oem 3
 	 */
 	public void tesseract() {
 		try {
@@ -132,6 +232,7 @@ public class TesseractOCR {
 					"tesseract",
 					this.getImageName().getAbsolutePath(),
 					this.getOutputBase().getAbsolutePath(),
+					this.getExtension(),
 					"-l", this.getLanguage(),
 					"--psm", this.getPageSegmentationMode().getValue(),
 					"--oem", this.getOCREngineModes().getValue()
@@ -142,6 +243,11 @@ public class TesseractOCR {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void main(String[] args) {
+		TesseractOCR t = new TesseractOCR(new File("C:\\Users\\guilh\\Downloads\\Print2.png"), new File("C:\\Users\\guilh\\Downloads\\Print2"));
+		t.tesseract();
 	}
 	
 }
