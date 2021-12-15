@@ -1,7 +1,7 @@
 /**
  * 
  */
-package br.com.javacheatbook.javadb;
+package br.com.javadb;
 
 /**
  * @author GuiDB
